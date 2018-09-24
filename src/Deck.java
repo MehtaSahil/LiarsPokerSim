@@ -1,4 +1,8 @@
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.Stack;
 
 
 class Deck {
@@ -11,7 +15,7 @@ class Deck {
         shuffle();
     }
 
-    public List<Card> getCards() {
+    public Stack<Card> getCards() {
         return cards;
     }
 
