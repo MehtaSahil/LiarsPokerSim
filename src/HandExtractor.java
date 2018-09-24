@@ -14,6 +14,6 @@ Given a set of dealt cards, determine how may
 interface HandExtractor {
 
     //return the number of hands of this type present in the dealt cards
-    public int extract(Set<Card> dealt);
+    public int extract();
 
 }

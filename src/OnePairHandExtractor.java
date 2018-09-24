@@ -3,29 +3,19 @@ import java.util.Map;
 import java.util.Set;
 
 class OnePairHandExtractor implements HandExtractor {
+    Map<CardValue, Integer> valueCounts;
 
-    // Return the number of unique values for which there exist pairs
-    public int extract(Set<Card> dealt) {
-        Map<CardValue, Integer> counts = new HashMap<>();
+    public OnePairHandExtractor(Map<CardValue, Integer> valueCounts) {
+        this.valueCounts = valueCounts;
+    }
 
-        for (Card c : dealt) {
-            CardValue val = c.getValue();
-
-            // Create key, value pair if it does not exist
-            if (!counts.containsKey(val)) {
-                counts.put(val, 0);
-            }
-
-            // Increment value
-            counts.put(val, counts.get(val) + 1);
-        }
-
-        // TODO: Decide if we want to distinguish between pairs of the same value
+    // Return the number of unique values for which there exist pairs.
+    // e.g. {2, 2, 2, 3, 3, 4, 5} => 2 values for which there exist pairs
+    public int extract() {
         // Count all values that have at least two occurrences (one pair).
-        // Maximum of one pair counted per value
         int num_paired_values = 0;
-        for (CardValue val : counts.keySet()) {
-            if (counts.get(val) >= 2) {
+        for (CardValue val : valueCounts.keySet()) {
+            if (valueCounts.get(val) >= 2) {
                 num_paired_values++;
             }
         }
