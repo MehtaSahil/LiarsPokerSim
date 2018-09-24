@@ -6,14 +6,30 @@ class Runner {
     public static void main(String[] args) {
         Deck d = new Deck();
 
-        Set<Card> dealt = d.dealNCards(10);
+        int num_trials = 10000;
 
-        HandCollector hc = new HandCollector(dealt);
+        for (int i = 1; i <= 52; i++) {
 
-        Map<HandExtractorMap, Integer> collectorMap = hc.collect();
-        System.out.println(collectorMap);
-        System.out.println(collectorMap.get(HandExtractorMap.OnePairHandExtractor));
+            double probability = 0;
 
-        d.prepareForNext(dealt);
+            // Deal i cards num_trials times and count the number of times a hand shows up
+            // Then calculate the probability
+            for (int trial = 0; trial < num_trials; trial++) {
+                Set<Card> dealt = d.dealNCards(i);
+
+                HandCollector hc = new HandCollector(dealt);
+                Map<HandExtractorMap, Integer> collectorMap = hc.collect();
+
+                if (collectorMap.get(HandExtractorMap.OnePairHandExtractor) > 0) {
+                    probability += 1;
+                }
+
+                // Return the cards and shuffle for next deal
+                d.prepareForNext(dealt);
+            }
+
+            probability /= num_trials;
+            System.out.println(i + ", " + probability);
+        }
     }
 }
