@@ -1,13 +1,11 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 class Deck {
-    List<Card> cards;
+    Stack<Card> cards;
 
     public Deck() {
-        cards = new ArrayList<Card>();
+        cards = new Stack<>();
 
         initialize();
         shuffle();
@@ -23,17 +21,47 @@ class Deck {
 
     // Create 52 card deck
     private void initialize() {
+
         Suit[] suits = Suit.values();
         CardValue[] cardValues = CardValue.values();
 
-        for (Suit s : suits) {
-            for (CardValue v : cardValues) {
-                cards.add(new Card(s, v));
+        // For every suit, create all cards
+        for (Suit suit : suits) {
+            for (CardValue value : cardValues) {
+                cards.push(new Card(suit, value));
             }
         }
     }
 
     public String toString() {
         return cards.toString();
+    }
+
+    // Pops n cards from the internal stack of cards as if dealing
+    public Set<Card> dealNCards(int n) {
+        Set<Card> dealt = new HashSet<>();
+
+        for (int i = 0; i < n; i++) {
+            dealt.add(cards.pop());
+        }
+
+        return dealt;
+    }
+
+    // Pushes the dealt cards back onto the internal stack of cards as if
+    // reclaiming after a round
+    public void reclaimDealtCards(Set<Card> dealt) {
+        for (Card c : dealt) {
+            cards.push(c);
+        }
+    }
+
+    // Returns the deck to a neutral, random state so that the next round can
+    // be played. This allows us to use the same Deck object between rounds
+    // instead of creating a new object for each round
+    public void prepareForNext(Set<Card> dealt) {
+        reclaimDealtCards(dealt);
+
+        shuffle();
     }
 }
