@@ -1,15 +1,14 @@
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 class HandCollector {
-    private Set<HandExtractor> extractors;
+    private Map<HandExtractorMap, HandExtractor> extractors;
     private Map<CardValue, Integer> valueCounts;
     private Map<Suit, Integer> suitCounts;
 
     public HandCollector(Set<Card> dealt) {
-        extractors = new HashSet<>();
+        extractors = new HashMap<>();
         valueCounts = new HashMap<>();
         suitCounts = new HashMap<>();
 
@@ -40,14 +39,14 @@ class HandCollector {
     }
 
     private void initializeExtractors() {
-        extractors.add(new OnePairHandExtractor(valueCounts));
+        extractors.put(HandExtractorMap.OnePairHandExtractor, new OnePairHandExtractor(valueCounts));
     }
 
-    public Map<HandExtractor, Integer> collect() {
-        Map<HandExtractor, Integer> extractorValues = new HashMap<>();
+    public Map<HandExtractorMap, Integer> collect() {
+        Map<HandExtractorMap, Integer> extractorValues = new HashMap<>();
 
-        for (HandExtractor he : extractors) {
-            extractorValues.put(he, he.extract());
+        for (HandExtractorMap he : extractors.keySet()) {
+            extractorValues.put(he, extractors.get(he).extract());
         }
 
         return extractorValues;
