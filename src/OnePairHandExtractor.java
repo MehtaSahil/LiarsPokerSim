@@ -23,4 +23,8 @@ class OnePairHandExtractor implements HandExtractor {
         return num_paired_values;
     }
 
+    public String toString() {
+        return "OnePairHandExtractor";
+    }
+
 }

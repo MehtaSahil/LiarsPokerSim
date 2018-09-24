@@ -43,9 +43,13 @@ class HandCollector {
         extractors.add(new OnePairHandExtractor(valueCounts));
     }
 
-    public void collect() {
+    public Map<HandExtractor, Integer> collect() {
+        Map<HandExtractor, Integer> extractorValues = new HashMap<>();
+
         for (HandExtractor he : extractors) {
-            System.out.println(he.extract());
+            extractorValues.put(he, he.extract());
         }
+
+        return extractorValues;
     }
 }
