@@ -40,6 +40,7 @@ class HandCollector {
 
     private void initializeExtractors() {
         extractors.put(HandExtractorMap.OnePairHandExtractor, new OnePairHandExtractor(valueCounts));
+        extractors.put(HandExtractorMap.TwoPairHandExtractor, new TwoPairHandExtractor(valueCounts));
     }
 
     public Map<HandExtractorMap, Boolean> collect() {

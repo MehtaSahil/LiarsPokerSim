@@ -9,11 +9,10 @@ class Runner {
 
         Map<HandExtractorMap, Double> probabilities = new HashMap<>();
         probabilities.put(HandExtractorMap.OnePairHandExtractor, 0.0);
+        probabilities.put(HandExtractorMap.TwoPairHandExtractor, 0.0);
 
         int num_trials = 10000;
         for (int i = 1; i <= 52; i++) {
-
-            double probability = 0;
 
             // Deal i cards num_trials times and count the number of times a hand shows up
             // Then calculate the probability
@@ -30,6 +29,13 @@ class Runner {
                     );
                 }
 
+                if (collectorMap.get(HandExtractorMap.TwoPairHandExtractor)) {
+                    probabilities.put(
+                            HandExtractorMap.TwoPairHandExtractor,
+                            probabilities.get(HandExtractorMap.TwoPairHandExtractor) + 1
+                    );
+                }
+
                 // Return the cards and shuffle for next deal
                 d.prepareForNext(dealt);
             }
@@ -38,7 +44,14 @@ class Runner {
                 HandExtractorMap.OnePairHandExtractor,
                 probabilities.get(HandExtractorMap.OnePairHandExtractor) / num_trials
             );
-            System.out.println(i + ", " + probabilities.get(HandExtractorMap.OnePairHandExtractor));
+
+            probabilities.put(
+                    HandExtractorMap.TwoPairHandExtractor,
+                    probabilities.get(HandExtractorMap.TwoPairHandExtractor) / num_trials
+            );
+
+            System.out.print(i + " : " + probabilities.get(HandExtractorMap.OnePairHandExtractor) + " : ");
+            System.out.println(probabilities.get(HandExtractorMap.TwoPairHandExtractor));
         }
     }
 }
