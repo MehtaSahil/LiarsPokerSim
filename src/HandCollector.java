@@ -41,6 +41,7 @@ class HandCollector {
     private void initializeExtractors() {
         extractors.put(HandExtractorMap.OnePairHandExtractor, new OnePairHandExtractor(valueCounts));
         extractors.put(HandExtractorMap.TwoPairHandExtractor, new TwoPairHandExtractor(valueCounts));
+        extractors.put(HandExtractorMap.ThreeKindHandExtractor, new ThreeKindHandExtractor(valueCounts));
     }
 
     public Map<HandExtractorMap, Boolean> collect() {

@@ -49,9 +49,9 @@ class Runner {
             }
 
             // Output probabilities
-            System.out.print(i + " : ");
+            System.out.printf("%2d, ", i);
             for (HandExtractorMap mapping : HandExtractorMap.values()) {
-                System.out.print(probabilities.get(mapping) + " : ");
+                System.out.printf("%.4f, ", probabilities.get(mapping));
             }
             System.out.println();
         }

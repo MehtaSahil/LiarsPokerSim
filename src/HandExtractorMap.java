@@ -3,5 +3,6 @@
 // processed on a per-extractor basis.
 enum HandExtractorMap {
     OnePairHandExtractor,
-    TwoPairHandExtractor;
+    TwoPairHandExtractor,
+    ThreeKindHandExtractor;
 }
