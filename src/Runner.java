@@ -8,9 +8,13 @@ class Runner {
         Deck d = new Deck();
 
         Map<HandExtractorMap, Double> probabilities = new HashMap<>();
-        probabilities.put(HandExtractorMap.OnePairHandExtractor, 0.0);
-        probabilities.put(HandExtractorMap.TwoPairHandExtractor, 0.0);
 
+        // Initialize all probabilities to zero
+        for (HandExtractorMap mapping : HandExtractorMap.values()) {
+            probabilities.put(mapping, 0.0);
+        }
+
+        // Main simulation loop
         int num_trials = 10000;
         for (int i = 1; i <= 52; i++) {
 
@@ -22,36 +26,34 @@ class Runner {
                 HandCollector hc = new HandCollector(dealt);
                 Map<HandExtractorMap, Boolean> collectorMap = hc.collect();
 
-                if (collectorMap.get(HandExtractorMap.OnePairHandExtractor)) {
-                    probabilities.put(
-                        HandExtractorMap.OnePairHandExtractor,
-                        probabilities.get(HandExtractorMap.OnePairHandExtractor) + 1
-                    );
-                }
-
-                if (collectorMap.get(HandExtractorMap.TwoPairHandExtractor)) {
-                    probabilities.put(
-                            HandExtractorMap.TwoPairHandExtractor,
-                            probabilities.get(HandExtractorMap.TwoPairHandExtractor) + 1
-                    );
+                // Count the different hands
+                for (HandExtractorMap mapping : HandExtractorMap.values()) {
+                    if (collectorMap.get(mapping)) {
+                        probabilities.put(
+                            mapping,
+                            probabilities.get(mapping) + 1
+                        );
+                    }
                 }
 
                 // Return the cards and shuffle for next deal
                 d.prepareForNext(dealt);
             }
 
-            probabilities.put(
-                HandExtractorMap.OnePairHandExtractor,
-                probabilities.get(HandExtractorMap.OnePairHandExtractor) / num_trials
-            );
+            // Calculate probabilities
+            for (HandExtractorMap mapping : HandExtractorMap.values()) {
+                probabilities.put(
+                    mapping,
+                    probabilities.get(mapping) / num_trials
+                );
+            }
 
-            probabilities.put(
-                    HandExtractorMap.TwoPairHandExtractor,
-                    probabilities.get(HandExtractorMap.TwoPairHandExtractor) / num_trials
-            );
-
-            System.out.print(i + " : " + probabilities.get(HandExtractorMap.OnePairHandExtractor) + " : ");
-            System.out.println(probabilities.get(HandExtractorMap.TwoPairHandExtractor));
+            // Output probabilities
+            System.out.print(i + " : ");
+            for (HandExtractorMap mapping : HandExtractorMap.values()) {
+                System.out.print(probabilities.get(mapping) + " : ");
+            }
+            System.out.println();
         }
     }
 }
