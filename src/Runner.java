@@ -21,9 +21,9 @@ class Runner {
                 Set<Card> dealt = d.dealNCards(i);
 
                 HandCollector hc = new HandCollector(dealt);
-                Map<HandExtractorMap, Integer> collectorMap = hc.collect();
+                Map<HandExtractorMap, Boolean> collectorMap = hc.collect();
 
-                if (collectorMap.get(HandExtractorMap.OnePairHandExtractor) > 0) {
+                if (collectorMap.get(HandExtractorMap.OnePairHandExtractor)) {
                     probabilities.put(
                         HandExtractorMap.OnePairHandExtractor,
                         probabilities.get(HandExtractorMap.OnePairHandExtractor) + 1

@@ -42,8 +42,8 @@ class HandCollector {
         extractors.put(HandExtractorMap.OnePairHandExtractor, new OnePairHandExtractor(valueCounts));
     }
 
-    public Map<HandExtractorMap, Integer> collect() {
-        Map<HandExtractorMap, Integer> extractorValues = new HashMap<>();
+    public Map<HandExtractorMap, Boolean> collect() {
+        Map<HandExtractorMap, Boolean> extractorValues = new HashMap<>();
 
         for (HandExtractorMap he : extractors.keySet()) {
             extractorValues.put(he, extractors.get(he).extract());

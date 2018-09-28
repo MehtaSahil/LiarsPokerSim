@@ -1,6 +1,4 @@
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 class OnePairHandExtractor implements HandExtractor {
     Map<CardValue, Integer> valueCounts;
@@ -11,16 +9,15 @@ class OnePairHandExtractor implements HandExtractor {
 
     // Return the number of unique values for which there exist pairs.
     // e.g. {2, 2, 2, 3, 3, 4, 5} => 2 values for which there exist pairs
-    public int extract() {
+    public boolean extract() {
         // Count all values that have at least two occurrences (one pair).
-        int num_paired_values = 0;
         for (CardValue val : valueCounts.keySet()) {
             if (valueCounts.get(val) >= 2) {
-                num_paired_values++;
+                return true;
             }
         }
 
-        return num_paired_values;
+        return false;
     }
 
     public String toString() {
